@@ -1,7 +1,7 @@
 import 'exceptions.dart';
 
 /// A Result class that encapsulates success or failure
-sealed class Result<T> {
+abstract class Result<T> {
   const Result();
   
   /// Check if the result is a success
@@ -11,31 +11,37 @@ sealed class Result<T> {
   bool get isFailure => this is Failure<T>;
   
   /// Get the data if success, null if failure
-  T? get data => switch (this) {
-    Success<T> success => success.data,
-    Failure<T> _ => null,
-  };
+  T? get data {
+    if (this is Success<T>) {
+      return (this as Success<T>).data;
+    }
+    return null;
+  }
   
   /// Get the exception if failure, null if success
-  AppException? get exception => switch (this) {
-    Success<T> _ => null,
-    Failure<T> failure => failure.exception,
-  };
+  AppException? get exception {
+    if (this is Failure<T>) {
+      return (this as Failure<T>).exception;
+    }
+    return null;
+  }
   
   /// Transform the result if success, otherwise return failure
   Result<U> map<U>(U Function(T) transform) {
-    return switch (this) {
-      Success<T> success => Success(transform(success.data)),
-      Failure<T> failure => Failure(failure.exception),
-    };
+    if (this is Success<T>) {
+      return Success(transform((this as Success<T>).data));
+    } else {
+      return Failure((this as Failure<T>).exception);
+    }
   }
   
   /// Chain operations that return Result
   Result<U> flatMap<U>(Result<U> Function(T) transform) {
-    return switch (this) {
-      Success<T> success => transform(success.data),
-      Failure<T> failure => Failure(failure.exception),
-    };
+    if (this is Success<T>) {
+      return transform((this as Success<T>).data);
+    } else {
+      return Failure((this as Failure<T>).exception);
+    }
   }
   
   /// Handle both success and failure cases
@@ -43,10 +49,25 @@ sealed class Result<T> {
     U Function(T) onSuccess,
     U Function(AppException) onFailure,
   ) {
-    return switch (this) {
-      Success<T> success => onSuccess(success.data),
-      Failure<T> failure => onFailure(failure.exception),
-    };
+    if (this is Success<T>) {
+      return onSuccess((this as Success<T>).data);
+    } else {
+      return onFailure((this as Failure<T>).exception);
+    }
+  }
+  
+  /// Execute action if success
+  void onSuccess(void Function(T) action) {
+    if (this is Success<T>) {
+      action((this as Success<T>).data);
+    }
+  }
+  
+  /// Execute action if failure
+  void onFailure(void Function(AppException) action) {
+    if (this is Failure<T>) {
+      action((this as Failure<T>).exception);
+    }
   }
 }
 
