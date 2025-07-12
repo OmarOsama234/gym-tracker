@@ -57,12 +57,26 @@ class Validators {
     return null;
   }
   
+  /// Validate notes (optional field)
+  static String? validateNotes(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return null; // Notes are optional
+    }
+    
+    if (value.trim().length > AppConstants.maxNotesLength) {
+      return AppConstants.validationNotesTooLong;
+    }
+    
+    return null;
+  }
+  
   /// Validate multiple fields and return a map of errors
   static Map<String, String> validateWorkout({
     required String exercise,
     required String sets,
     required String reps,
     required String weight,
+    String? notes,
   }) {
     final errors = <String, String>{};
     
@@ -86,6 +100,69 @@ class Validators {
       errors['weight'] = weightError;
     }
     
+    final notesError = validateNotes(notes);
+    if (notesError != null) {
+      errors['notes'] = notesError;
+    }
+    
     return errors;
+  }
+  
+  /// Check if all workout fields are valid
+  static bool isWorkoutValid({
+    required String exercise,
+    required String sets,
+    required String reps,
+    required String weight,
+    String? notes,
+  }) {
+    final errors = validateWorkout(
+      exercise: exercise,
+      sets: sets,
+      reps: reps,
+      weight: weight,
+      notes: notes,
+    );
+    return errors.isEmpty;
+  }
+  
+  /// Parse and validate exercise name
+  static String? parseExercise(String? value) {
+    if (validateExercise(value) != null) {
+      return null;
+    }
+    return value!.trim();
+  }
+  
+  /// Parse and validate sets
+  static int? parseSets(String? value) {
+    if (validateSets(value) != null) {
+      return null;
+    }
+    return int.tryParse(value!.trim());
+  }
+  
+  /// Parse and validate reps
+  static int? parseReps(String? value) {
+    if (validateReps(value) != null) {
+      return null;
+    }
+    return int.tryParse(value!.trim());
+  }
+  
+  /// Parse and validate weight
+  static double? parseWeight(String? value) {
+    if (validateWeight(value) != null) {
+      return null;
+    }
+    return double.tryParse(value!.trim());
+  }
+  
+  /// Parse and validate notes
+  static String? parseNotes(String? value) {
+    if (validateNotes(value) != null) {
+      return null;
+    }
+    return value?.trim().isNotEmpty == true ? value!.trim() : null;
   }
 }
