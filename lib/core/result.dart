@@ -1,7 +1,7 @@
 import 'exceptions.dart';
 
 /// A Result class that encapsulates success or failure
-sealed class Result<T> {
+abstract class Result<T> {
   const Result();
   
   /// Check if the result is a success
