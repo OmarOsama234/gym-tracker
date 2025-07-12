@@ -6,6 +6,17 @@ abstract class AppException implements Exception {
   const AppException(this.message, [this.details]);
   
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AppException &&
+          runtimeType == other.runtimeType &&
+          message == other.message &&
+          details == other.details;
+  
+  @override
+  int get hashCode => Object.hash(runtimeType, message, details);
+  
+  @override
   String toString() => 'AppException: $message${details != null ? ' - $details' : ''}';
 }
 
@@ -18,7 +29,22 @@ class DatabaseException extends AppException {
 class ValidationException extends AppException {
   final Map<String, String> fieldErrors;
   
-  const ValidationException(super.message, [this.fieldErrors = const {}]);
+  const ValidationException(super.message, [this.fieldErrors = const {}, super.details]);
+  
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ValidationException &&
+          runtimeType == other.runtimeType &&
+          message == other.message &&
+          details == other.details &&
+          fieldErrors == other.fieldErrors;
+  
+  @override
+  int get hashCode => Object.hash(runtimeType, message, details, fieldErrors);
+  
+  @override
+  String toString() => 'ValidationException: $message${details != null ? ' - $details' : ''}${fieldErrors.isNotEmpty ? ' - Fields: $fieldErrors' : ''}';
 }
 
 /// Exception for network operations
