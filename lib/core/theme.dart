@@ -44,9 +44,13 @@ class AppTheme {
       ),
       cardTheme: CardTheme(
         elevation: AppConstants.cardElevation,
+        color: lightSurface,
+        shadowColor: Colors.black.withOpacity(0.2),
+        surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.borderRadius),
         ),
+        margin: const EdgeInsets.all(8.0),
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
@@ -134,9 +138,13 @@ class AppTheme {
       ),
       cardTheme: CardTheme(
         elevation: AppConstants.cardElevation,
+        color: darkSurface,
+        shadowColor: Colors.black.withOpacity(0.5),
+        surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.borderRadius),
         ),
+        margin: const EdgeInsets.all(8.0),
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
