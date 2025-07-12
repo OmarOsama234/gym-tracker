@@ -17,18 +17,20 @@ class WorkoutAdapter extends TypeAdapter<Workout> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Workout(
-      fields[0] as String,
-      fields[1] as int,
-      fields[2] as int,
-      fields[3] as double,
-      fields[4] as DateTime,
+      exercise: fields[0] as String,
+      sets: fields[1] as int,
+      reps: fields[2] as int,
+      weight: fields[3] as double,
+      timestamp: fields[4] as DateTime,
+      notes: fields[5] as String?,
+      duration: fields[6] as Duration?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Workout obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.exercise)
       ..writeByte(1)
@@ -38,7 +40,11 @@ class WorkoutAdapter extends TypeAdapter<Workout> {
       ..writeByte(3)
       ..write(obj.weight)
       ..writeByte(4)
-      ..write(obj.timestamp);
+      ..write(obj.timestamp)
+      ..writeByte(5)
+      ..write(obj.notes)
+      ..writeByte(6)
+      ..write(obj.duration);
   }
 
   @override
