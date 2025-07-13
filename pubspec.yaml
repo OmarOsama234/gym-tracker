@@ -16,6 +16,20 @@ dependencies:
   path_provider: ^2.1.3
   provider: ^6.1.1
   cupertino_icons: ^1.0.8
+  # Authentication & User Management
+  firebase_auth: ^4.15.3
+  firebase_core: ^2.24.2
+  google_sign_in: ^6.1.6
+  # Image handling
+  image_picker: ^1.0.4
+  cached_network_image: ^3.3.0
+  # Social features
+  timeago: ^3.5.0
+  # UI Components
+  flutter_rating_bar: ^4.0.1
+  shimmer: ^3.0.0
+  # Charts for progress
+  fl_chart: ^0.66.0
 
 dev_dependencies:
   flutter_test:
