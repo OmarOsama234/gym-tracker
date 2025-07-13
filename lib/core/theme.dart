@@ -44,9 +44,14 @@ class AppTheme {
       ),
       cardTheme: CardTheme(
         elevation: AppConstants.cardElevation,
+        color: lightSurface,
+        shadowColor: Colors.black.withOpacity(0.2),
+        surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.borderRadius),
         ),
+        // margin property is deprecated in Material 3
+        // Cards should handle their own margins in the widget tree
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
@@ -134,9 +139,14 @@ class AppTheme {
       ),
       cardTheme: CardTheme(
         elevation: AppConstants.cardElevation,
+        color: darkSurface,
+        shadowColor: Colors.black.withOpacity(0.2),
+        surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.borderRadius),
         ),
+        // margin property is deprecated in Material 3
+        // Cards should handle their own margins in the widget tree
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
