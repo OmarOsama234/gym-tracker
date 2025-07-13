@@ -50,8 +50,6 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.borderRadius),
         ),
-        // margin property is deprecated in Material 3
-        // Cards should handle their own margins in the widget tree
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
@@ -145,8 +143,6 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.borderRadius),
         ),
-        // margin property is deprecated in Material 3
-        // Cards should handle their own margins in the widget tree
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
