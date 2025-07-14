@@ -211,6 +211,33 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateUserRole(app_user.UserRole role) async {
+    final firebaseUser = _auth.currentUser;
+    if (firebaseUser == null) return;
+
+    try {
+      // Create new user with role if doesn't exist
+      if (_currentUser == null) {
+        _currentUser = app_user.User(
+          id: firebaseUser.uid,
+          email: firebaseUser.email ?? '',
+          displayName: firebaseUser.displayName ?? 'User',
+          role: role,
+          createdAt: DateTime.now(),
+          lastLoginAt: DateTime.now(),
+          isFirstLogin: true,
+        );
+      } else {
+        _currentUser!.role = role;
+      }
+      
+      await _saveUserToLocal(_currentUser!);
+      notifyListeners();
+    } catch (e) {
+      _errorMessage = 'Failed to update user role: ${e.toString()}';
+    }
+  }
+
   Future<void> _loadUserFromLocal(String userId) async {
     final box = await Hive.openBox<app_user.User>('users');
     _currentUser = box.get(userId);

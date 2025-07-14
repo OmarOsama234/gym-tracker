@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'core/theme.dart';
 import 'core/hive_setup.dart';
 import 'core/constants.dart';
 import 'services/workout_service.dart';
-import 'screens/home_page.dart';
+import 'services/auth_service.dart';
+import 'services/social_service.dart';
+import 'screens/auth/login_screen.dart';
+import 'screens/main_navigation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   try {
+    // Initialize Firebase
+    await Firebase.initializeApp();
+    
     // Initialize Hive database
     await initHive();
     
@@ -30,8 +36,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => SocialService()),
+      ],
       child: Consumer<ThemeProvider>(
         builder: (_, themeProvider, __) {
           return MaterialApp(
@@ -40,7 +50,7 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeProvider.themeMode,
-            home: const HomePage(),
+            home: const AuthWrapper(),
           );
         },
       ),
@@ -99,6 +109,25 @@ class ErrorApp extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Authentication wrapper to handle login flow
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AuthService>(
+      builder: (context, authService, _) {
+        // Check if user is logged in
+        if (authService.isAuthenticated && authService.currentUser != null) {
+          return const MainNavigation();
+        } else {
+          return const LoginScreen();
+        }
+      },
     );
   }
 }

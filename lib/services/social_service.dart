@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/social_post.dart';
-import '../models/user.dart';
 
 class SocialService extends ChangeNotifier {
   static final SocialService _instance = SocialService._internal();
@@ -164,6 +163,38 @@ class SocialService extends ChangeNotifier {
 
   List<SocialPost> getPostsByType(PostType type) {
     return _posts.where((post) => post.type == type).toList();
+  }
+
+  // Methods for social screen compatibility
+  Future<List<SocialPost>> getPosts() async {
+    if (_posts.isEmpty) {
+      await loadSamplePosts();
+    }
+    return _posts;
+  }
+
+  Future<void> createPostSimple({
+    required String content,
+    required PostType type,
+    List<String> imageUrls = const [],
+    Map<String, dynamic> metadata = const {},
+  }) async {
+    await createPost(
+      userId: 'current_user_id', // TODO: Get from auth service
+      userDisplayName: 'Current User', // TODO: Get from auth service
+      content: content,
+      imageUrls: imageUrls,
+      type: type,
+      metadata: metadata,
+    );
+  }
+
+  Future<void> likePostSimple(String postId) async {
+    await likePost(postId, 'current_user_id'); // TODO: Get from auth service
+  }
+
+  Future<void> unlikePost(String postId) async {
+    await likePost(postId, 'current_user_id'); // This will toggle the like
   }
 
   Future<void> _savePost(SocialPost post) async {

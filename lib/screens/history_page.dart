@@ -220,7 +220,7 @@ class _HistoryPageState extends State<HistoryPage> {
       margin: const EdgeInsets.all(AppConstants.defaultPadding),
       padding: const EdgeInsets.all(AppConstants.defaultPadding),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceVariant,
+                    color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(AppConstants.borderRadius),
       ),
       child: Column(

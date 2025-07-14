@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../services/auth_service.dart';
 import '../../models/user.dart';
-import '../../core/theme.dart';
-import 'login_screen.dart';
+import '../../core/constants.dart';
 import '../main_navigation.dart';
+import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -279,7 +279,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             });
                           },
                         ),
-                        Expanded(
+                        const Expanded(
                           child: Text.rich(
                             TextSpan(
                               text: 'I agree to the ',
@@ -384,7 +384,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Already have an account? ',
                           style: TextStyle(color: AppColors.textSecondary),
                         ),
@@ -431,7 +431,7 @@ class _SignupScreenState extends State<SignupScreen> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
+          color: isSelected ? AppColors.primary.withValues(alpha: 0.1) : Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? AppColors.primary : Colors.grey[300]!,
@@ -456,7 +456,7 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 4),
             Text(
               subtitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.textSecondary,
               ),

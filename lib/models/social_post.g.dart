@@ -137,7 +137,7 @@ class PostTypeAdapter extends TypeAdapter<PostType> {
       case 4:
         return PostType.general;
       default:
-        return PostType.general;
+        return PostType.workout;
     }
   }
 

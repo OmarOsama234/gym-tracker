@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../services/auth_service.dart';
-import '../../core/theme.dart';
+import '../../core/constants.dart';
 import 'signup_screen.dart';
 import 'role_selection_screen.dart';
 import '../main_navigation.dart';
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (user.isFirstLogin) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => RoleSelectionScreen(user: user),
+            builder: (context) => const RoleSelectionScreen(),
           ),
         );
       } else {
@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } else if (authService.errorMessage == null && mounted) {
       // User exists but needs role selection
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const RoleSelectionScreen(),
         ),
@@ -258,17 +258,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 16),
                     
                     // Divider
-                    Row(
+                    const Row(
                       children: [
-                        const Expanded(child: Divider()),
+                        Expanded(child: Divider()),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             'or',
                             style: TextStyle(color: AppColors.textSecondary),
                           ),
                         ),
-                        const Expanded(child: Divider()),
+                        Expanded(child: Divider()),
                       ],
                     ),
                     
@@ -344,7 +344,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Don't have an account? ",
                           style: TextStyle(color: AppColors.textSecondary),
                         ),
