@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../core/constants.dart';
-import '../../services/social_service.dart';
 import '../../models/social_post.dart';
+import '../../services/social_service.dart';
+import '../../services/auth_service.dart';
+import '../../models/user.dart';
 
 class SocialScreen extends StatefulWidget {
   const SocialScreen({super.key});

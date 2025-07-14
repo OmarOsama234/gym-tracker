@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../core/constants.dart';
-import 'home_page.dart';
 import 'dashboard/dashboard_screen.dart';
 import 'social/social_screen.dart';
 import 'workouts/workout_screen.dart';

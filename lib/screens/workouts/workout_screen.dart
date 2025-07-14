@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../core/constants.dart';
 import '../../services/workout_service.dart';
 import '../../models/workout.dart';
@@ -26,7 +25,16 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
   }
 
   void _loadWorkouts() {
-    _workoutsFuture = WorkoutService().getAllWorkouts();
+    _workoutsFuture = _loadWorkoutsFromService();
+  }
+  
+  Future<List<Workout>> _loadWorkoutsFromService() async {
+    final result = WorkoutService().getAllWorkouts();
+    if (result.isSuccess) {
+      return result.data!;
+    } else {
+      throw Exception(result.exception);
+    }
   }
 
   @override
@@ -406,7 +414,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                     sets: int.parse(setsController.text.trim()),
                     reps: int.parse(repsController.text.trim()),
                     weight: double.parse(weightController.text.trim()),
-                    date: DateTime.now(),
+                    timestamp: DateTime.now(),
                   );
 
                   await WorkoutService().addWorkout(workout);
@@ -522,7 +530,15 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                     timestamp: workout.timestamp,
                   );
 
-                  await WorkoutService().updateWorkout(workout, updatedWorkout);
+                  // Update the existing workout object
+                  workout.updateWith(
+                    exercise: exerciseController.text.trim(),
+                    sets: int.parse(setsController.text.trim()),
+                    reps: int.parse(repsController.text.trim()),
+                    weight: double.parse(weightController.text.trim()),
+                  );
+                  
+                  await WorkoutService().updateWorkout(workout);
 
                   if (mounted) {
                     Navigator.of(context).pop();

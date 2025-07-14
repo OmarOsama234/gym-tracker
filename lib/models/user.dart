@@ -43,6 +43,9 @@ class User extends HiveObject {
   @HiveField(12)
   Map<String, dynamic> preferences;
 
+  @HiveField(13)
+  DateTime? dateOfBirth;
+
   User({
     required this.id,
     required this.email,
@@ -57,6 +60,7 @@ class User extends HiveObject {
     this.phoneNumber,
     this.interests = const [],
     this.preferences = const {},
+    this.dateOfBirth,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -74,6 +78,9 @@ class User extends HiveObject {
       phoneNumber: json['phoneNumber'],
       interests: List<String>.from(json['interests'] ?? []),
       preferences: Map<String, dynamic>.from(json['preferences'] ?? {}),
+      dateOfBirth: json['dateOfBirth'] != null 
+          ? DateTime.parse(json['dateOfBirth']) 
+          : null,
     );
   }
 
@@ -92,6 +99,7 @@ class User extends HiveObject {
       'phoneNumber': phoneNumber,
       'interests': interests,
       'preferences': preferences,
+      'dateOfBirth': dateOfBirth?.toIso8601String(),
     };
   }
 }

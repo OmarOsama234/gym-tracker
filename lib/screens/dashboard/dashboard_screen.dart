@@ -34,7 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (result.isSuccess) {
       return result.data!;
     } else {
-      throw Exception(result.error);
+      throw Exception(result.exception);
     }
   }
 

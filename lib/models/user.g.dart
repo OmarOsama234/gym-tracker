@@ -30,13 +30,14 @@ class UserAdapter extends TypeAdapter<User> {
       phoneNumber: fields[10] as String?,
       interests: (fields[11] as List).cast<String>(),
       preferences: (fields[12] as Map).cast<String, dynamic>(),
+      dateOfBirth: fields[13] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -62,7 +63,9 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(11)
       ..write(obj.interests)
       ..writeByte(12)
-      ..write(obj.preferences);
+      ..write(obj.preferences)
+      ..writeByte(13)
+      ..write(obj.dateOfBirth);
   }
 
   @override
